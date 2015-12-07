@@ -1,0 +1,4 @@
+- name: wrapper for role testing
+  hosts: localhost
+  roles:
+    - 'ansible-test-framework'
