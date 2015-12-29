@@ -2,11 +2,14 @@
 
 source 'https://rubygems.org'
 
-#gem 'rake'
 gem 'test-kitchen'
-gem 'kitchen-ansible'
 gem 'kitchen-vagrant'
-gem 'kitchen-sharedtests'
-gem 'kitchen-sync'
-gem 'kitchen-transport-rsync'
 gem 'serverspec'
+
+group :ansible_local do
+  gem 'kitchen-ansible'
+end
+
+group :ansible_push do
+  gem 'kitchen-ansiblepush'
+end
