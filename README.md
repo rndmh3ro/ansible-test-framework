@@ -1,6 +1,7 @@
 # Testing Ansible Roles
 
 This framework provides the necessary files and configurations to easily setup your environment for testing ansible-roles.
+It uses test-kitchen, vagrant and serverspec to test your roles on multiple operating systems.
 
 # Prerequesites
 
@@ -13,8 +14,8 @@ Install the following software:
 
 # Usage
 
-create a directory for your role you want to test (called `ansible_role` in the following example).
-Then git-clone the testing-framework into your newly created directory and change into it:
+Create a directory for your role you want to test (called `ansible_role` in the following example).
+Git-clone the testing-framework into your newly created directory and change into it:
 ```
 # basic setup
 mkdir ansible_role
@@ -23,25 +24,24 @@ cd ansible_role/
 ```
 
 Create an empty role with `ansible-galaxy`.
-Run this command inside your role-directory and replace `ansible_role` with the name you gave the directory.
+Run inside your role-directory, replace `ansible_role` with the name you gave the directory.
 
 ```
 # create empty ansible role
 ansible-galaxy init -p ../ --force ansible_role
 ```
 
-Now test-kitchen, serverspec, the provisioner, driver and all its dependencies have to be installed.
-Fortunately this can all be done with [bundler], a gem dependency handler for ruby:
-
+Install test-kitchen, serverspec, the provisioner, driver and all its dependencies, with the help of [bundler]:
 ```
 # Install software and dependencies
 gem install bundler
 bundle install --without ansible_push
 ```
 
-Customize your testing-setup. You'll have to replace the default name `ansible-test-framework` with the name of your role (in my case `ansible_role`) in two places, the `default.yml` and the `.kitchen.yml`.
-In `kitchen.yml` the replacement should be in the `roles_path`.
-In `default.yml` its the first item after `roles`.
+Customize your testing-setup. 
+Replace the default name `ansible-test-framework` with the name of your role (in this example `ansible_role`) in two places:
+- `default.yml` -> replacement should be in the `roles_path`.
+- `.kitchen.yml` -> replacement should be the first item after `roles`.
 
 You can also use this `sed`-command to replace the occurences.
 Just replace `your_role` in the command with the name of your role.
