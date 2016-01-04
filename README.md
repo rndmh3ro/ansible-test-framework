@@ -15,6 +15,7 @@ Install the following software:
 ## Setup
 
 Create a directory for your role you want to test (called `ansible_role` in the following example).
+**The name directory and the name of the role have to be the same!**
 Git-clone the testing-framework into your newly created directory and change into it:
 ```
 # basic setup
