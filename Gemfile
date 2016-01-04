@@ -9,7 +9,3 @@ gem 'serverspec'
 group :ansible_local do
   gem 'kitchen-ansible'
 end
-
-group :ansible_push do
-  gem 'kitchen-ansiblepush'
-end

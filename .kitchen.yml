@@ -2,9 +2,6 @@
 driver:
   name: vagrant
 
-transport:
-  name: rsync
-
 provisioner:
   name: ansible_playbook
   playbook: default.yml
@@ -16,6 +13,7 @@ provisioner:
   ansible_verbose: true
   ansible_version: latest
   ansible_diff: true
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 platforms:
 - name: ubuntu-12.04
@@ -25,9 +23,6 @@ platforms:
 - name: centos-7.2
 - name: debian-7.9
 - name: debian-8.2
-
-verifier:
-  ruby_bindir: '/usr/bin'
 
 suites:
 - name: default
