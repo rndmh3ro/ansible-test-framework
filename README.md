@@ -35,7 +35,7 @@ Install test-kitchen, serverspec, the provisioner, driver and all its dependenci
 ```
 # Install software and dependencies
 gem install bundler
-bundle install --without ansible_push
+bundle install
 ```
 
 Customize your testing-setup. 
