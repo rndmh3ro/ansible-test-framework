@@ -9,9 +9,7 @@ provisioner:
   hosts: all
   require_ansible_repo: false
   require_ansible_omnibus: true
-  require_ruby_for_busser: true
   ansible_verbose: true
-  ansible_version: latest
   ansible_diff: true
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
