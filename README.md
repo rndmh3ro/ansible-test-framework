@@ -2,6 +2,7 @@
 
 This framework provides the necessary files and configurations to easily setup your environment for testing ansible-roles.
 It uses test-kitchen, vagrant and serverspec to test your roles on multiple operating systems.
+It also supports automated travis-test out of the box.
 
 ## Prerequesites
 
