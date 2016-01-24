@@ -1,0 +1,22 @@
+---
+language: python
+python: "2.7"
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-apt python-pycurl
+install:
+  - pip install ansible
+  - echo -e 'localhost ansible_connection=local' > ./inventory
+  - echo -e '[defaults]\nroles_path = ../\nhostfile = ./inventory' > ./ansible.cfg
+
+script:
+    # syntax-check
+  - ansible-playbook --sudo default.yml --syntax-check
+    # test the role
+  - ansible-playbook --sudo default.yml --diff -v
+    # test role idempotence.
+  - >
+    ansible-playbook --sudo default.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
