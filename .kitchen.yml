@@ -23,4 +23,7 @@ platforms:
 - name: debian-8.2
 
 suites:
-- name: default
+- name: ansible_1.9
+  provisioner:
+    ansible_version: 1.9.4
+- name: ansible_latest
