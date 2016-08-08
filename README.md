@@ -10,6 +10,9 @@ Install the following software:
 
 - Git
 - Ruby
+- Docker
+
+Optionally:
 - VirtualBox
 - Vagrant
 
