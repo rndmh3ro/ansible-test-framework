@@ -53,7 +53,7 @@ Just replace `ansible_role` in the command with the name of your role.
 
 ```
 # replace ansible-test-framework with your role-name in:
-sed -i 's/ansible-test-framework/ansible_role/g' default.yml .kitchen.yml
+sed -i 's/ansible-test-framework/ansible_role/g' default.yml .kitchen.yml .kitchen.vagrant.yml
 ```
 
 ## Write the role and tests
