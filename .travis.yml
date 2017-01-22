@@ -1,27 +1,69 @@
 ---
-language: python
-python: "2.7"
+services: docker
 
 env:
-  - ANSIBLE_VERSION=latest
-  - ANSIBLE_VERSION=1.9.4
+  - distro: centos6
+    version: latest
+    init: /sbin/init
+
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    version: latest
+
+  - distro: oracle6
+    version: latest
+    init: /sbin/init
+
+  - distro: oracle7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    version: latest
+
+  - distro: ubuntu1604
+    version: latest
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+  - distro: ubuntu1404
+    version: latest
+    init: /sbin/init
+
+  - distro: ubuntu1204
+    version: latest
+    init: /sbin/init
+
+  - distro: debian7
+    version: latest
+    init: /sbin/init
+
+  - distro: debian8
+    version: latest
+    init: /sbin/init
+
+  - distro: debian9
+    version: latest
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq python-apt python-pycurl
-install:
-  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
-  - echo -e 'localhost ansible_connection=local' > ./inventory
-  - echo -e '[defaults]\nroles_path = ../\nhostfile = ./inventory' > ./ansible.cfg
+  # Pull container
+  - 'docker pull rndmh3ro/docker-${distro}-ansible:${version}'
 
 script:
-    # syntax-check
-  - ansible-playbook --sudo default.yml --syntax-check
-    # test the role
-  - ansible-playbook --sudo default.yml --diff -v
-    # test role idempotence.
-  - >
-    ansible-playbook --sudo default.yml
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  - container_id=$(mktemp)
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-test-framework:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} "${init}" > "${container_id}"'
+
+  # syntax-check
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-test-framework/default.yml --syntax-check'
+
+  # Test role.
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-test-framework/default.yml'
+
+  # test role idempotence.
+  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-test-framework/default.yml | grep -q "changed=0.*failed=0" && (echo "Idempotence test: pass" && exit 0) || (echo "Idempotence test: fail" && exit 1)'
+
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
