@@ -16,16 +16,22 @@ Optionally:
 - VirtualBox
 - Vagrant
 
+## Docker images
+
+This setup user custom [docker images](https://github.com/rndmh3ro/docker-ansible).
+These docker images only derive from the base images as they have Ansible pre-installed, thus saving the time to install it!
+
 ## Setup
 
 Create a directory for your role you want to test (called `ansible_role` in the following example).
 **The name directory and the name of the role have to be the same!**
-Git-clone the testing-framework into your newly created directory and change into it:
+Git-clone the testing-framework into your newly created directory, change into it and delete the now useless .git directory:
 ```
 # basic setup
 mkdir ansible_role
 git clone https://github.com/rndmh3ro/ansible-test-framework ansible_role/
 cd ansible_role/
+rm -fr .git/
 ```
 
 Create an empty role with `ansible-galaxy`.
@@ -47,13 +53,14 @@ Customize your testing-setup.
 Replace the default name `ansible-test-framework` with the name of your role (in this example `ansible_role`) in two places:
 - `default.yml` -> replacement should be in the `roles_path`.
 - `.kitchen.yml` -> replacement should be the first item after `roles`.
+- `.travis.yml` -> replacement should be under `# syntax-check`, `# Test role.` and `# test role idempotence.`
 
 You can also use this `sed`-command to replace the occurences.
 Just replace `ansible_role` in the command with the name of your role.
 
 ```
 # replace ansible-test-framework with your role-name in:
-sed -i 's/ansible-test-framework/ansible_role/g' default.yml .kitchen.yml .kitchen.vagrant.yml
+sed -i 's/ansible-test-framework/ansible_role/g' default.yml .kitchen.yml .kitchen.vagrant.yml .travis.yml
 ```
 
 ## Write the role and tests
@@ -73,7 +80,7 @@ You can test single machines, a set of machines or all at once. See the followin
 
 ```
 # fast test on one machine
-bundle exec kitchen test ansible-latest-ubuntu-1604
+bundle exec kitchen test ansible-centos7-ansible-latest
 
 # test on all machines in parallel
 bundle exec kitchen test -c
@@ -83,7 +90,9 @@ bundle exec kitchen test ubuntu
 ```
 
 ## Testing with Virtualbox
-You can also use vagrant and Virtualbox or VMWare to run tests locally. You will have to install Virtualbox and Vagrant on your system. See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package suitable for your system.
+You can also use vagrant and Virtualbox or VMWare to run tests locally.
+You will have to install Virtualbox and Vagrant on your system.
+See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package suitable for your system.
 
 ```
 # fast test on one machine
@@ -102,7 +111,6 @@ KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test ubuntu
 To circumvent this, you can create and then converge the machine. If the role fails during converging, you can simply run the converge again:
 
 ```
-
 # for development
 
 bundle exec kitchen create ansible-latest-ubuntu-1604
