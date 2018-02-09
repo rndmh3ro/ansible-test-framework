@@ -96,7 +96,7 @@ See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package s
 
 ```
 # fast test on one machine
-KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test ansible-latest-ubuntu-1604
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test ansible-ubuntu-1604
 
 # test on all machines in parallel
 KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test -c
