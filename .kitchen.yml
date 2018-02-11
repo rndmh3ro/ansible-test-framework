@@ -3,6 +3,7 @@ driver:
   name: docker
   use_sudo: false
   privileged: true
+  #socket: npipe:////./pipe/docker_engine # If you are using Docker for Windows, make sure this setting is enabled.
 
 transport:
   max_ssh_sessions: 5

@@ -78,6 +78,8 @@ You will have to install Docker on your system. See [Get started](https://docs.d
 
 You can test single machines, a set of machines or all at once. See the following examples or take a look at the test-kitchen [docs]().
 
+If you are using [Docker for Windows](https://docs.docker.com/docker-for-windows/install/), make sure you are using the correct [socket](https://github.com/test-kitchen/kitchen-docker#socket) settings.
+
 ```
 # fast test on one machine
 bundle exec kitchen test ansible-centos7-ansible-latest
