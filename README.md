@@ -78,6 +78,8 @@ You will have to install Docker on your system. See [Get started](https://docs.d
 
 You can test single machines, a set of machines or all at once. See the following examples or take a look at the test-kitchen [docs]().
 
+If you are using [Docker for Windows](https://docs.docker.com/docker-for-windows/install/), make sure you are using the correct [socket](https://github.com/test-kitchen/kitchen-docker#socket) settings.
+
 ```
 # fast test on one machine
 bundle exec kitchen test ansible-centos7-ansible-latest
@@ -96,7 +98,7 @@ See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package s
 
 ```
 # fast test on one machine
-KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test ansible-latest-ubuntu-1604
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test ansible-ubuntu-1604
 
 # test on all machines in parallel
 KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test -c
