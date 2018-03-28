@@ -39,7 +39,7 @@ Run inside your role-directory, replace `ansible_role` with the name you gave th
 
 ```
 # create empty ansible role
-ansible-galaxy init -p ../ --force ansible_role
+ansible-galaxy init --force -p ../ansible_role
 ```
 
 Install test-kitchen, serverspec, the provisioner, driver and all its dependencies, with the help of [bundler]:
