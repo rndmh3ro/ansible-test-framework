@@ -1,4 +1,4 @@
----
+--
 services: docker
 
 env:
@@ -44,6 +44,11 @@ env:
   - distro: debian9
     version: latest
     init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+  - distro: amazon
+    init: /lib/systemd/systemd
+    version: latest
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
