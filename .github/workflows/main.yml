@@ -1,0 +1,14 @@
+name: release
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - uses: docker://ferrarimarco/github-changelog-generator
+    - name: Run a one-line script
+      run: github-changelog-generator
