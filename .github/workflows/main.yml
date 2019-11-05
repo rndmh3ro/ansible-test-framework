@@ -9,6 +9,4 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - uses: docker://ferrarimarco/github-changelog-generator
-    - name: Run a one-line script
-      run: github-changelog-generator --user rndmh3ro --project ansible-test-framework --token ${{ secrets.GITHUB_TOKEN }}
+    - uses: docker://ferrarimarco/github-changelog-generator --user rndmh3ro --project ansible-test-framework --token ${{ secrets.GITHUB_TOKEN }}
